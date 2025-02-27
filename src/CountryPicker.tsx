@@ -85,6 +85,10 @@ interface CountryPickerProps {
   onSelect(country: Country): void
   onOpen?(): void
   onClose?(): void
+  testIds?: {
+    pickerButton?: string;
+    pcikerCountryList?: string;
+  }
 }
 
 export const CountryPicker = (props: CountryPickerProps) => {
@@ -122,6 +126,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     excludeCountries,
     placeholder,
     preferredCountries,
+    testIds,
   } = props
   const [state, setState] = useState<State>({
     visible: props.visible || false,
@@ -172,6 +177,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
     onOpen,
     containerButtonStyle,
     placeholder: placeholder || 'Select Country',
+    testID: testIds?.pickerButton,
   }
 
   useEffect(() => {
@@ -237,6 +243,7 @@ export const CountryPicker = (props: CountryPickerProps) => {
             filter,
             filterFocus,
             flatListProps,
+            testIds,
           }}
         />
       </CountryModal>
