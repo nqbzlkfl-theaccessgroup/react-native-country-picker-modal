@@ -118,8 +118,9 @@ export interface FlagButtonProps {
   withFlagButton?: boolean
   containerButtonStyle?: StyleProp<ViewStyle>
   countryCode?: CountryCode
-  placeholder: string
+  placeholder?: string
   onOpen?(): void
+  testID?: string;
 }
 
 export const FlagButton = ({
@@ -133,10 +134,11 @@ export const FlagButton = ({
   containerButtonStyle,
   onOpen,
   placeholder,
+  testID,
 }: FlagButtonProps) => {
   const { flagSizeButton: flagSize } = useTheme()
   return (
-    <TouchableOpacity activeOpacity={0.7} onPress={onOpen}>
+    <TouchableOpacity activeOpacity={0.7} onPress={onOpen} testID={testID} accessibility={true} accessibilityLabel={testID}>
       <View
         style={[
           styles.container,

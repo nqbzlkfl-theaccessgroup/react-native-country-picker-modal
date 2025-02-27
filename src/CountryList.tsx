@@ -88,6 +88,7 @@ interface CountryItemProps {
   withCallingCode?: boolean
   withCurrency?: boolean
   onSelect(country: Country): void
+  testID?: string;
 }
 const CountryItem = (props: CountryItemProps) => {
   const { activeOpacity, itemHeight, flagSize } = useTheme()
@@ -98,6 +99,7 @@ const CountryItem = (props: CountryItemProps) => {
     withEmoji,
     withCallingCode,
     withCurrency,
+    testID,
   } = props
   const extraContent: string[] = []
   if (
@@ -113,12 +115,19 @@ const CountryItem = (props: CountryItemProps) => {
   const countryName =
     typeof country.name === 'string' ? country.name : country.name.common
 
+  const testIDValue = (cca2: string) => {
+    if (testID) {
+      return { testID: `${testID}_${cca2}`, accessibility: true, accessibilityLabel: `${testID}_${cca2}` }
+    } else return { testID: `country-selector-${country.cca2}` };
+  }
+
   return (
     <TouchableOpacity
       key={country.cca2}
-      testID={`country-selector-${country.cca2}`}
+      // testID={`country-selector-${country.cca2}`}
       onPress={() => onSelect(country)}
       {...{ activeOpacity }}
+      {...testIDValue(country.cca2)}
     >
       <View style={[styles.itemCountry, { height: itemHeight }]}>
         {withFlag && (
@@ -159,6 +168,7 @@ interface CountryListProps {
   withCurrency?: boolean
   flatListProps?: FlatListProps<Country>
   onSelect(country: Country): void
+  testIds?: any;
 }
 
 const ItemSeparatorComponent = () => {
@@ -182,6 +192,7 @@ export const CountryList = (props: CountryListProps) => {
     filter,
     flatListProps,
     filterFocus,
+    testIds,
   } = props
 
   const flatListRef = useRef<FlatList<Country>>(null)
@@ -232,6 +243,7 @@ export const CountryList = (props: CountryListProps) => {
           withCallingCode,
           withCurrency,
           onSelect,
+          testID: testIds?.pcikerCountryList,
         })}
         {...{
           data: search(filter, data),
